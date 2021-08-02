@@ -17,8 +17,8 @@ def get_todo(todo_id):
 
 def update_todo(todo_id, todo):
     existing_todo = get_todo(todo_id)
-    existing_todo.title = todo['title'],
-    existing_todo.description = todo['description'],
+    existing_todo.title = todo['title']
+    existing_todo.description = todo['description']
     existing_todo.updated_at = datetime.utcnow()
     db.session.commit()
     return existing_todo

@@ -3,7 +3,7 @@ import json
 from flask import request
 from flask_restful import Resource
 
-from auth_app.auth_manager import create_user, find_user_by_email
+from auth_app.auth_manager import create_user, find_user_by_email, generate_access_token, generate_refresh_token
 from auth_app.schemas.user_schema import UserSchema
 from extensions import bcrypt
 
@@ -37,6 +37,9 @@ class LoginResource(Resource):
         else:
             is_valid = check_if_password_matches(user.password, credential['password'])
             if is_valid:
-                return {'message': 'Login successful'}
+                access_token = generate_access_token(user.id)
+                refresh_token = generate_refresh_token(user.id)
+                return {'email': user.email, 'message': 'Login Successful', 'access_token': access_token,
+                        'refresh_token': refresh_token}
             else:
                 return {'message': 'Password do not match'}

@@ -1,6 +1,7 @@
 import json
 
 from flask import request
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource, abort
 
 from todo_app.schemas.todo_schema import TodoSchema
@@ -21,16 +22,19 @@ def abort_if_todo_doesnt_exist(todo_id):
 
 
 class TodoResource(Resource):
+    @jwt_required()
     def get(self, todo_id):
         abort_if_todo_doesnt_exist(todo_id)
         todo = get_todo(todo_id)
         return todo_schema.dump(todo)
 
+    @jwt_required()
     def delete(self, todo_id):
         abort_if_todo_doesnt_exist(todo_id)
         delete_todo(todo_id)
         return '', 204
 
+    @jwt_required()
     def put(self, todo_id):
         abort_if_todo_doesnt_exist(todo_id)
         todo_dict = json.loads(request.data)
@@ -39,10 +43,12 @@ class TodoResource(Resource):
 
 
 class TodoListResource(Resource):
+    @jwt_required()
     def get(self):
         todos = get_todo_list()
         return todos_schema.dump(todos)
 
+    @jwt_required()
     def post(self):
         todo_dict = json.loads(request.data)
         new_todo = create_todo(todo_dict)

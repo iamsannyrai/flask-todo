@@ -5,7 +5,7 @@ from todo_app.models.todo_model import TodoModel
 
 
 def create_todo(todo):
-    todo = TodoModel(title=todo['title'], description=todo['description'])
+    todo = TodoModel(title=todo['title'], description=todo['description'], user_id=todo['user_id'])
     db.session.add(todo)
     db.session.commit()
     return todo

@@ -3,7 +3,7 @@ from flask import Flask
 from auth_app.auth import auth_app
 from todo_app.todo import todo_app
 
-from extensions import db, ma, migrate
+from extensions import db, ma, migrate, bcrypt
 
 
 def create_app(config_file):
@@ -14,4 +14,5 @@ def create_app(config_file):
     db.init_app(flask_app)
     migrate.init_app(flask_app, db)
     ma.init_app(flask_app)
+    bcrypt.init_app(flask_app)
     return flask_app

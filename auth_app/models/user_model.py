@@ -16,4 +16,4 @@ class UserModel(db.Model):
     todos = db.relationship(TodoModel, backref='user', lazy=True)
 
     def __repr__(self):
-        return '<User %r>' % (self.first_name + self.last_name)
+        return '<User %r>' % self.first_name

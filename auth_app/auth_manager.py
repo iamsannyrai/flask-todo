@@ -8,3 +8,7 @@ def create_user(user):
     db.session.add(new_user)
     db.session.commit()
     return new_user
+
+
+def find_user_by_email(email) -> UserModel:
+    return UserModel.query.filter_by(email=email).first()

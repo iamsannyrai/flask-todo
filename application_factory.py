@@ -1,14 +1,15 @@
 from flask import Flask
 
+from config import config
 from auth_app.auth import auth_app
 from todo_app.todo import todo_app
 
 from extensions import db, ma, migrate, bcrypt, jwt
 
 
-def create_app(config_file):
+def create_app(environment):
     flask_app = Flask(__name__)
-    flask_app.config.from_object(config_file)
+    flask_app.config.from_object(config[environment])
     flask_app.register_blueprint(auth_app, url_prefix='/api/auth')
     flask_app.register_blueprint(todo_app, url_prefix="/api/todos")
     db.init_app(flask_app)
